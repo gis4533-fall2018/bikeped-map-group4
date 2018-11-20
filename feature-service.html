@@ -43,27 +43,39 @@
     <div id="map"></div>
 
     <script>
+         var bikeLayer = L.esri.featureLayer({url: 'https://services.arcgis.com/8df8p0NlLFEShl0r/arcgis/rest/services/bikeCounts/FeatureServer/1?token=57w5wa51MmfYjwxBbHm0QXbDULHGFGCNZAaycDZ8RvSNfpcwXjaZ5rgE71R3K2t-9u_t5bmP_-u68IS7BrHkI90kI_f03y0FHDQP35pqqIEjr9hby_QshDKVEbwzihFagwy8Dj1LwkcDFN7JqKXj1n2L4Mb4fF5klI9e11MjlTVL9hg5o-phQ2AeuAjdWwlRzUgoHpo7M6toVH3_JkFMWA..'}),
+            pedLayer = L.esri.featureLayer({url: 'https://services.arcgis.com/8df8p0NlLFEShl0r/arcgis/rest/services/bikeCounts/FeatureServer/0?token=57w5wa51MmfYjwxBbHm0QXbDULHGFGCNZAaycDZ8RvSNfpcwXjaZ5rgE71R3K2t-9u_t5bmP_-u68IS7BrHkI90kI_f03y0FHDQP35pqqIEjr9hby_QshDKVEbwzihFagwy8Dj1LwkcDFN7JqKXj1n2L4Mb4fF5klI9e11MjlTVL9hg5o-phQ2AeuAjdWwlRzUgoHpo7M6toVH3_JkFMWA..'});
+        
+        var overlayMaps = {
+            "Bike Count": bikeLayer,
+            "Ped Count": pedLayer
+        };
+        
         // add map
         const map = L.map('map', {
-          center: [45.52, -122.667],
-          zoom: 3
+            center: [46.76, -92.1005],
+            zoom: 12,
+            layers:[bikeLayer, pedLayer],
         });
         // add basemap
         const esriStreets = L.esri.basemapLayer('Gray').addTo(map);
+        
+       
+        
+        L.control.layers(overlayMaps).addTo(map);
+        
+        //legend
+        bikeLayer.bindPopup(function (layer){
+            console.log(layer.feature.properties)
+			// create variables to be displayed in popup
+			var Count = layer.feature.properties.Count;
+		    // format content for popup
+		    var html = 
+		    	"<table><tr><td>Most Recent Count: </td><td>"+Count+"</td></tr></table>";
 
-        // add hosted feature layer
-        const earthquakesLayer = L.esri.featureLayer({url: 'https://services.arcgis.com/8df8p0NlLFEShl0r/arcgis/rest/services/NaturalDisasters_Earthquakes/FeatureServer/0'}).addTo(map);
-
-        // set up popup for earthquakes layer
-        earthquakesLayer.bindPopup(function(evt) {
-            return L.Util.template(
-              '<table>'+
-                '<tr><td>LOCATION:</td><td>{LOCATION}</td></tr>'+
-                '<tr><td>YEAR:</td><td>{YEAR}</td></tr>'+
-                '<tr><td>MAGNITUDE:</td><td>{MAGNITUDE}</td></tr>'+
-              '</table>',
-              evt.feature.properties);
-        });
+		    return html;
+		})
+	  	.addTo(map);
     </script>
 </body>
 </html>
