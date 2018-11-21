@@ -66,7 +66,7 @@
         
         //legend
         
-        //popup start
+        //popup start for bike layer
         bikeLayer.bindPopup(function (layer){
             console.log(layer.feature.properties)
 			// create variables to be displayed in popup
@@ -78,7 +78,21 @@
 		    return html;
 		})
 	  	.addTo(map);
-        //popup end
+        //popup end for bike layer
+        
+        //popup start for ped layer
+        pedLayer.bindPopup(function (layer){
+            console.log(layer.feature.properties)
+			// create variables to be displayed in popup
+			var Count = layer.feature.properties.Count_;
+		    // format content for popup
+		    var html = 
+		    	"<table><tr><td>Most Recent Count: </td><td>"+Count+"</td></tr></table>";
+
+		    return html;
+		})
+	  	.addTo(map);
+        //popup end for ped layer      
     </script>
 </body>
 </html>
