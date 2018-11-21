@@ -60,12 +60,9 @@
         // add basemap
         const esriStreets = L.esri.basemapLayer('Gray').addTo(map);
         
-       
         // layer toggle
         L.control.layers(overlayMaps).addTo(map);
-        
-        //legend
-        
+             
         //popup start for bike layer
         bikeLayer.bindPopup(function (layer){
             console.log(layer.feature.properties)
@@ -92,7 +89,22 @@
 		    return html;
 		})
 	  	.addTo(map);
-        //popup end for ped layer      
+        //popup end for ped layer     
+        
+         // Legend start
+        var legend = L.control({position: 'bottomleft'});
+
+        legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend');
+
+            div.innerHTML +=
+            '<img src="legend.png" alt="legend" width="134" height="347">';
+
+        return div;
+        };
+
+        legend.addTo(map);
+        // Legend end
     </script>
 </body>
 </html>
