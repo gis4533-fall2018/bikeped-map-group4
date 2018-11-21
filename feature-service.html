@@ -61,14 +61,16 @@
         const esriStreets = L.esri.basemapLayer('Gray').addTo(map);
         
        
-        
+        // layer toggle
         L.control.layers(overlayMaps).addTo(map);
         
         //legend
+        
+        //popup start
         bikeLayer.bindPopup(function (layer){
             console.log(layer.feature.properties)
 			// create variables to be displayed in popup
-			var Count = layer.feature.properties.Count;
+			var Count = layer.feature.properties.Count_;
 		    // format content for popup
 		    var html = 
 		    	"<table><tr><td>Most Recent Count: </td><td>"+Count+"</td></tr></table>";
@@ -76,6 +78,7 @@
 		    return html;
 		})
 	  	.addTo(map);
+        //popup end
     </script>
 </body>
 </html>
